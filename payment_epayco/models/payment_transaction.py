@@ -19,7 +19,6 @@ class PaymentTransaction(models.Model):
         comodel_name='epayco.franchise',
         string='Franchise')
 
-    @api.multi
     def get_tx_signature(self, data):
         """Build hash sha256 for signature of payment transaction."""
         self.ensure_one()
@@ -74,7 +73,6 @@ class PaymentTransaction(models.Model):
             raise ValidationError(error_msg)
         return tx
 
-    @api.multi
     def _epayco_form_get_invalid_parameters(self, data):
         """Find invalid parameters comming from data of ePayco."""
         invalid_parameters = []

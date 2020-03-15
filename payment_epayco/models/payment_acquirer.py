@@ -5,7 +5,7 @@
 
 from werkzeug import urls
 
-from odoo import api, fields, models, _
+from odoo import fields, models, _
 from odoo.addons.payment_epayco.controllers.main import EpaycoController
 from odoo.exceptions import ValidationError
 
@@ -52,12 +52,10 @@ class PaymentAcquirer(models.Model):
         help='Mapping of ePayco document types according to'
         'odoo document types.')
 
-    @api.multi
     def epayco_get_form_action_url(self):
         """Return url for form action of template form button."""
         return '/payment/epayco/checkout/'
 
-    @api.multi
     def epayco_form_generate_values(self, values):
         """Generate values to use in template qweb of form button."""
         self.ensure_one()
