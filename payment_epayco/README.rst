@@ -86,6 +86,7 @@ Contributors
 ~~~~~~~~~~~~
 
 * Manuel Marquez <buzondemam@gmail.com>
+* Yan Chirino <support@yanchirino.com>
 
 Other credits
 ~~~~~~~~~~~~~
