@@ -61,7 +61,7 @@ class PaymentAcquirer(models.Model):
         self.ensure_one()
         epayco_checkout_external = (
             'false' if self.epayco_checkout_type == 'onpage' else 'true')
-        env_test = 'true' if self.environment == 'test' else 'false'
+        env_test = 'true' if self.state == 'test' else 'false'
         partner_lang = values.get('partner') and values['partner'].lang
         lang = 'es' if 'es' in partner_lang else 'en'
         epayco_document_type = self.env['epayco.document.type']

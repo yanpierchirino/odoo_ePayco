@@ -45,7 +45,7 @@ class EpaycoTest(EpaycoCommon):
             'epayco_public_key': 'cb3c56b60ac95b76c2f015e3005b4617',
         })
         self.assertEqual(
-            self.epayco.environment, 'test', 'test without test environment')
+            self.epayco.state, 'test', 'test without test environment')
 
         # ----------------------------------------
         # Test: button direct rendering
