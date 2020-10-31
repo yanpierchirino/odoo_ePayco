@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-# Copyright 2019 ePayco.co
+# Copyright 2020 ePayco.co
 # - Manuel Marquez <buzondemam@gmail.com>
+# - Yan Chirino <support@yanchirino.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import logging
@@ -19,7 +20,7 @@ class EpaycoController(http.Controller):
     _confirmation_url = '/payment/epayco/confirmation/'
 
     @http.route(
-        ['/payment/epayco/checkout/'], type='http', csrf=False, website=True)
+        ['/payment/epayco/checkout/'], auth="public", type='http', csrf=False, website=True)
     def epayco_checkout(self, **post):
         """Render template to redirect to ePayco checkout."""
         order = request.website.sale_get_order()

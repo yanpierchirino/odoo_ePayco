@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-# Copyright 2019 ePayco.co
+# Copyright 2020 ePayco.co
 # - Manuel Marquez <buzondemam@gmail.com>
+# - Yan chirino <support@yanchirino.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from lxml import objectify
@@ -68,12 +69,6 @@ class EpaycoTest(EpaycoCommon):
             'ePayco: wrong form POST url')
         base_url = self.env['ir.config_parameter'].get_param('web.base.url')
         lang = 'es' if 'es' in self.buyer.lang else 'en'
-        epayco_document_type = self.env['epayco.document.type']
-
-        buyer_document_type = epayco_document_type.search([(
-            'l10n_co_document_type',
-            '=',
-            self.buyer.l10n_co_document_type)])[0].epayco_document_type
 
         form_values = {
             'currency_code': 'cop',
@@ -91,7 +86,7 @@ class EpaycoTest(EpaycoCommon):
             'billing_partner_name': self.buyer.name,
             'billing_partner_address': self.buyer_values.get(
                 'billing_partner_address'),
-            'billing_partner_document_type': buyer_document_type,
+            'billing_partner_document_type': "CC",
             'billing_partner_phone': self.buyer_values.get(
                 'billing_partner_phone'),
             'billing_partner_vat': self.buyer.vat,

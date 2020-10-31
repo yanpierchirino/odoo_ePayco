@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-# Copyright 2019 ePayco.co
+# Copyright 2020 ePayco.co
 # - Manuel Marquez <buzondemam@gmail.com>
+# - Yan chirino <support@yanchirino.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from werkzeug import urls
 
-from odoo import fields, models, _
+from odoo import fields, models
 from odoo.addons.payment_epayco.controllers.main import EpaycoController
-from odoo.exceptions import ValidationError
 
 
 class PaymentAcquirer(models.Model):
@@ -45,12 +45,6 @@ class PaymentAcquirer(models.Model):
         string='Transaction States',
         help='Mapping of ePayco transaction states according to'
         'odoo transaction states.')
-    epayco_document_type_ids = fields.One2many(
-        comodel_name='epayco.document.type',
-        inverse_name='payment_acquirer_id',
-        string='Document Types',
-        help='Mapping of ePayco document types according to'
-        'odoo document types.')
 
     def epayco_get_form_action_url(self):
         """Return url for form action of template form button."""
@@ -64,21 +58,13 @@ class PaymentAcquirer(models.Model):
         env_test = 'true' if self.state == 'test' else 'false'
         partner_lang = values.get('partner') and values['partner'].lang
         lang = 'es' if 'es' in partner_lang else 'en'
-        epayco_document_type = self.env['epayco.document.type']
-        document_type = epayco_document_type.search([(
-            'l10n_co_document_type',
-            '=',
-            values['partner'].l10n_co_document_type)])
 
-        if not document_type:
-            raise ValidationError(_(
-                'There is no ePayco document type related to customer document'
-                'type %s.') % values['partner'].l10n_co_document_type)
-
-        partner_document_type = document_type.epayco_document_type
-        partner_vat = values.get('partner') and values['partner'].vat
         base_url = self.env['ir.config_parameter'].get_param('web.base.url')
         epayco_tx_values = dict(values)
+        split_reference = epayco_tx_values.get('reference').split('-')
+        order = ''
+        if split_reference:
+            order = split_reference[0]
         epayco_tx_values.update({
             'currency_code': values.get('currency') and values[
                 'currency'].name.lower(),
@@ -88,11 +74,10 @@ class PaymentAcquirer(models.Model):
                 'partner_country'].code.lower(),
             'epayco_env_test': env_test,
             'epayco_lang': lang,
-            'billing_partner_document_type': partner_document_type,
-            'billing_partner_vat': partner_vat,
             'response_url': urls.url_join(
                 base_url, EpaycoController._response_url),
             'confirmation_url': urls.url_join(
                 base_url, EpaycoController._confirmation_url),
+            'order': order,
         })
         return epayco_tx_values

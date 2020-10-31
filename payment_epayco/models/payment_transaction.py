@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-# Copyright 2019 ePayco.co
+# Copyright 2020 ePayco.co
 # - Manuel Marquez <buzondemam@gmail.com>
+# - Yan chirino <support@yanchirino.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import hashlib
@@ -44,7 +45,7 @@ class PaymentTransaction(models.Model):
         """ Given a data dict coming from ePayco, verify it and
         find the related transaction record. """
         tx_signature = data.get('x_signature')
-        tx_reference = data.get('x_id_invoice')
+        tx_reference = data.get('x_extra1')
         if not tx_reference or not tx_signature:
             error_msg = 'ePayco: received data with missing reference' \
                 ' (%s) or signature (%s)' % (tx_reference, tx_signature)
