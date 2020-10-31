@@ -78,6 +78,7 @@ class EpaycoController(http.Controller):
 
     @http.route(
         ['/payment/epayco/response/'],
+        auth="public",
         type='http',
         csrf=False,
         website=True)

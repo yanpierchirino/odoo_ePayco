@@ -11,9 +11,9 @@
     <field name="provider">epayco</field>
     <field name="company_id" ref="base.main_company"/>
     <field name="view_template_id" ref="epayco_form"/>
-    <field name="image" type="base64" file="payment_epayco/static/description/icon.png"/>
+    <field name="image_128" type="base64" file="payment_epayco/static/description/icon.png"/>
     <field name="module_id" ref="base.module_payment_epayco"/>
-    <field name="environment">test</field>
+    <field name="state">test</field>
     <field name="pre_msg"><![CDATA[
     <p>You will be redirected to the ePayco website after clicking on the payment button.</p>]]></field>
     <field name="description" type="html">
@@ -40,7 +40,6 @@
     <field name="epayco_p_cust_id">dummy</field>
     <field name="epayco_p_key">dummy</field>
     <field name="epayco_public_key">dummy</field>
-    <field name="specific_countries" eval="True"/>
     <field name="country_ids" eval="[(6, 0, [ref('base.co')])]"/>
   </record>
 
